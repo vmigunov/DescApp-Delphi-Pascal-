@@ -1,0 +1,82 @@
+unit Unit11;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, DBCtrls, StdCtrls, DB, ADODB, Mask;
+
+type
+  TDEditor = class(TForm)
+    GroupBox1: TGroupBox;
+    SaveButton: TButton;
+    DBNavigator1: TDBNavigator;
+    CancelButton: TButton;
+    DBComboBox1: TDBComboBox;
+    ADOQuery1: TADOQuery;
+    Label5: TLabel;
+    DBComboBox2: TDBComboBox;
+    DBEdit1: TDBEdit;
+    DBEdit2: TDBEdit;
+    Label4: TLabel;
+    Label1: TLabel;
+    Label2: TLabel;
+    ADOQuery2: TADOQuery;
+    procedure CancelButtonClick(Sender: TObject);
+    procedure SaveButtonClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DEditor: TDEditor;
+
+implementation
+
+uses Unit4, Unit10;
+
+{$R *.dfm}
+
+procedure TDEditor.CancelButtonClick(Sender: TObject);
+begin
+DM.ADOQuerryDelivered.Cancel;
+DEditor.Close;
+end;
+
+procedure TDEditor.SaveButtonClick(Sender: TObject);
+begin
+if DM.TDelivered.Modified then
+DM.TDelivered.Post;
+DEditor.Close;
+end;
+
+procedure TDEditor.FormShow(Sender: TObject);
+begin
+  ADOQuery1.Close;
+  ADOQuery1.SQL.Clear;
+  ADOQuery1.SQL.Add('SELECT DISTINCT [Наименование товара] FROM Goods');
+  ADOQuery1.Open;
+   // ---------Заполняем DBComboBox1 ---------- //
+  DBComboBox1.Items.Clear;
+  While not ADOQuery1.Eof do
+  begin
+     DBComboBox1.Items.Add(ADOQuery1.Fields[0].AsString);
+     ADOQuery1.Next;
+end;
+  ADOQuery2.Close;
+  ADOQuery2.SQL.Clear;
+  ADOQuery2.SQL.Add('SELECT DISTINCT [Производитель] FROM Providers');
+  ADOQuery2.Open;
+   // ---------Заполняем DBComboBox2 ---------- //
+  DBComboBox2.Items.Clear;
+  While not ADOQuery2.Eof do
+  begin
+     DBComboBox2.Items.Add(ADOQuery2.Fields[0].AsString);
+     ADOQuery2.Next;
+  end;
+end;
+end.
+

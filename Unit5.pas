@@ -1,0 +1,90 @@
+unit Unit5;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, DBCtrls, StdCtrls, Mask, DB, ADODB;
+
+type
+  TPEditor = class(TForm)
+    GroupBox1: TGroupBox;
+    GroupBox2: TGroupBox;
+    DBEdit1: TDBEdit;
+    DBEdit2: TDBEdit;
+    DBEdit3: TDBEdit;
+    DBEdit4: TDBEdit;
+    DBEdit6: TDBEdit;
+    DBEdit7: TDBEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    DBEdit8: TDBEdit;
+    Label8: TLabel;
+    Label9: TLabel;
+    DBComboBox1: TDBComboBox;
+    DBNavigator1: TDBNavigator;
+    SaveButton: TButton;
+    CancelButton: TButton;
+    AddButton: TButton;
+    DBEdit5: TDBEdit;
+    procedure GroupBox1Exit(Sender: TObject);
+    procedure GroupBox2Exit(Sender: TObject);
+    procedure SaveButtonClick(Sender: TObject);
+    procedure AddButtonClick(Sender: TObject);
+    procedure CancelButtonClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  PEditor: TPEditor;
+
+implementation
+
+uses Unit4, Unit3, Unit2, Unit1;
+
+{$R *.dfm}
+
+procedure TPEditor.GroupBox1Exit(Sender: TObject);
+begin
+if DM.TProviders.Modified then
+DM.TProviders.Post;
+end;
+
+procedure TPEditor.GroupBox2Exit(Sender: TObject);
+begin
+if DM.TPhones.Modified then
+DM.TPhones.Post;
+end;
+
+procedure TPEditor.SaveButtonClick(Sender: TObject);
+begin
+if DM.TProviders.Modified then
+DM.TProviders.Post;
+if DM.TPhones.Modified then
+DM.TPhones.Post;
+PEditor.Close;
+end;
+
+procedure TPEditor.AddButtonClick(Sender: TObject);
+begin
+DM.TProviders.Append;
+DM.TPhones.Append;
+DBEdit1.SetFocus;
+end;
+
+procedure TPEditor.CancelButtonClick(Sender: TObject);
+begin
+DM.ADOQuerryProviders.Cancel;
+PEditor.Close;
+end;
+
+
+end.

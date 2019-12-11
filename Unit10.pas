@@ -1,0 +1,66 @@
+unit Unit10;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Mask, DBCtrls, ExtCtrls;
+
+type
+  TGEditor = class(TForm)
+    GroupBox1: TGroupBox;
+    AddButton: TButton;
+    SaveButton: TButton;
+    DBNavigator1: TDBNavigator;
+    CancelButton: TButton;
+    DBEdit1: TDBEdit;
+    DBEdit2: TDBEdit;
+    DBEdit3: TDBEdit;
+    DBEdit4: TDBEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    DBEdit5: TDBEdit;
+    procedure SaveButtonClick(Sender: TObject);
+    procedure CancelButtonClick(Sender: TObject);
+    procedure AddButtonClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  GEditor: TGEditor;
+
+implementation
+
+uses Unit4;
+
+{$R *.dfm}
+
+
+procedure TGEditor.SaveButtonClick(Sender: TObject);
+begin
+if DM.TGoods.Modified then
+DM.TGoods.Post;
+GEditor.Close;
+end;
+
+procedure TGEditor.CancelButtonClick(Sender: TObject);
+begin
+DM.ADOQuerryGoods.Cancel;
+GEditor.Close;
+end;
+
+procedure TGEditor.AddButtonClick(Sender: TObject);
+begin
+DM.TGoods.Append;
+DBEdit1.SetFocus;
+end;
+
+
+end.
+ 

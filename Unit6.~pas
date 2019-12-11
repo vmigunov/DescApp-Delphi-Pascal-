@@ -1,0 +1,49 @@
+unit Unit6;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls;
+
+type
+  TDelForm1 = class(TForm)
+    Label1: TLabel;
+    YesButton: TButton;
+    NoButton: TButton;
+    procedure NoButtonClick(Sender: TObject);
+    procedure YesButtonClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DelForm1: TDelForm1;
+
+implementation
+
+uses Unit2, Unit4;
+
+{$R *.dfm}
+
+procedure TDelForm1.NoButtonClick(Sender: TObject);
+begin
+DelForm1.Close;
+end;
+
+procedure TDelForm1.YesButtonClick(Sender: TObject);
+begin
+DM.ADOQuerryGoods.Delete;
+DM.ADOQuerryEarnings.Delete;
+DM.TGoods.Active:=False;
+DM.TGoods.Active:=True;
+DM.Earnings.Active:=False;
+DM.Earnings.Active:=True;
+DelForm1.Close;
+end;
+
+
+
+end.

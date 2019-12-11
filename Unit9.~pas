@@ -1,0 +1,47 @@
+unit Unit9;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Unit6, StdCtrls;
+
+type
+  TDelForm3 = class(TDelForm1)
+    procedure NoButtonClick(Sender: TObject);
+    procedure YesButtonClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DelForm3: TDelForm3;
+
+implementation
+
+uses Unit4, Unit2;
+
+{$R *.dfm}
+
+procedure TDelForm3.NoButtonClick(Sender: TObject);
+begin
+DelForm3.Close;
+end;
+
+procedure TDelForm3.YesButtonClick(Sender: TObject);
+begin
+DM.ADOQuerryDelivered.Delete;
+DM.DSDelivered.DataSet.DisableControls;
+try
+DM.DSDelivered.DataSet.Close;
+DM.TDelivered.Active:=False;
+DM.DSDelivered.DataSet.Open;
+DM.TDelivered.Active:=True;
+finally
+DM.DSDelivered.DataSet.EnableControls;
+DelForm3.Close;
+end;
+
+end.
